@@ -1,0 +1,148 @@
+1. General information
+2. How to generate a custom database (MetaboGetworks)
+3. How to create custom metabolic reaction networks (MetaboNetworks)
+4. Examples
+5. New in version 2.0
+5.1.  Changes in version 2.1
+5.2.  Changes in version 2.2
+
+Copyright J.M. Posma 2013-2018
+
+#####################################################################################################################
+
+1. General information
+
+Title: MetaboNetworks Toolbox
+
+Summary: A Matlab-based tool to create custom sub-networks using main substrate-product pairs as defined by the Kyoto 
+		Encyclopaedia of Genes and Genomes (KEGG). It can be used to explore transgenomic interactions, for
+		example mammalian and bacterial associations. It calculates the shortest path between a set of
+		metabolites (e.g. biomarkers from a metabonomic study) and plots the connectivity between metabolites
+		as links in a network graph. The resulting graph can be changed and explored interactively.
+		Furthermore, nodes in the graph are linked to the KEGG compound webpage.
+
+Author: J. M. Posma
+Institution: Imperial College London
+Department: Computational and Systems Medicine, Department of Surgery and Cancer
+Email: jmp111@ic.ac.uk
+Version: 2.0
+Citation: Posma JM, et al. (2014) Bioinformatics 30(6):893-5
+
+Platform dependence: none found (tested on Windows 7, Mac OSX 7.14 (Snow Leopard))
+Software dependence: none found (tested on Matlab versions 2010b, 2012a, 2012b, 2013a, 2013b, 2014a)
+                     one found (2014b - software does not work in this version, Mathworks changed GUI style)
+Toolbox dependence: none, when Statistics Toolbox is available, Multi-Dimensional Scaling can also be used as layout.
+
+#####################################################################################################################
+
+2. How to generate a custom database:
+
+Run in Matlab:
+
+>> MetaboGetworks
+
+This will start a GUI in which multiple organisms can be selected to be included.
+Once the list is saved MetaboGetworks will start querying KEGG, depending on which and how many organisms are
+	selected (as well as internet connection speeds, etc) this can take between 30 minutes and 20 hours.
+
+#####################################################################################################################
+
+3. How to create custom metabolic reaction networks:
+
+Run in Matlab:
+
+>> MetaboNetworks
+
+This will ask to select a database (make sure this is ready) and search for metabolites you want to include.
+If the workspace includes variables that are cell-strings, it will ask if any of those contain the metabolite names.
+If a cell-string is selected it will see if there are any variables (type double) of the same size that could hold
+	the information of the variable association with the response variable Y.
+In the GUI that starts up when there are cell-strings in the workspace, there is a button that allows the user to
+	search for metabolites. The list is saved in the workspace with the date and time stamp.
+
+To search for metabolites without calling MetaboNetworks:
+
+>> metabolitelist=SearchMetabolites;
+
+This will ask to select a database (make sure this is ready) and search for metabolites you want to include.
+
+When the metabolites have been selected, an association vector can be created for the metabolites.
+This has to be a vector (double) the same size as metabolitelist, where each metabolite is assigned a value.
+This value can be the correlation of the metabolite with the response variable of the study, the regression
+    coefficient or another entity. When this is included, MetaboNetworks will include an option to colour the nodes
+    based on this value. The colours of the nodes are plotted and the ranges are between [-1 1] or
+    [-1 1]*max(abs(associationvector)). When this option is used, the user is queried for the type of association
+    (e.g. correlation, regression coefficients), this will be added to the plot.
+
+>> MetaboNetworks
+
+The GUI will now include metabolitelist as a cell-string that can be chosen for selection.
+The MetaboNetworks GUI will start up and the network can be customized.
+Hoovering over the menu items will show a small description of each item. This includes different graph layouts,
+	deleting nodes, deleting edges, moving nodes, highlighting shortest paths, changing colours of nodes, + more.
+
+#####################################################################################################################
+
+4. Examples:
+
+>> mlist={'Creatinine','L-Leucine','L-Alanine'};
+>> mlist2={'L-Tyrosine';'Choline';'Citrate'}
+>> ylist=[0.90 0.68 -0.35];
+>> ylist2=[1;1;-1];
+>> % Select mlist or mlist2 from the drop-down menu
+>> % Followed by selecting ylist or ylist2 depending on which metabolite list was chosen (or choose none)
+>> MetaboNetworks
+
+#####################################################################################################################
+
+5. New in version 2
+
+New in version 2.0 compared to 1.4 (online 16 Sept 2013):
+
+Retain old positions in new network:
+  Changed code to keep positions even after new network is generated, then the positions of nodes that are in both
+      networks are fixed to their positions in the old network.
+  The remaining nodes are optimized based on the fixed positions. To turn this off, and generate a completely new
+  network layout make sure that the lock position button is disabled.
+Show all reachable metabolites within number of reactions from a specific metabolite:
+  When a single metabolite is supplied to MetaboNetworks, it shows all directly connected metabolites by default.
+  A new button is added (MPL) which allows the user to set the Maximal Path Length (MPL), when this is set to a
+  number >0 it shows all metabolites linked with at most MPL reactions.
+Show alternative paths between 2 metabolites:
+  When two metabolites are supplied to MetaboNetworks, it shows the shortest paths between the two by default. The
+  MPL has a different function here, if it is changed from 0 to a higher number all paths are shown that are at most
+  MPL reactions longer than the shortest path.
+Network is scaled with the figure:
+  When the figure is resized, the network is automatically rescaled as well. The network now aims to fill the figure
+  as much as possible.
+Faster re-drawing of graph:
+  When display properties of the graph are changed, where possible, specific elements are updated instead of
+  redrawing the entire graph as a whole.
+Node merge:
+  Nodes can be merged, for instance L-Leucine and D-Leucine can be merged to remain in the network as one.
+Deletion of layouts:
+  UEL and UEL ellipse layouts have been removed.
+Colour by association:
+  Now recognizes whether the supplied data can be interpreted as class or is continuous.
+New selection tools:
+  Select all metabolites
+  Select all biomarker metabolites
+Change of function:
+  Change background colour now changes the colour for selected nodes (or for all if none are selected.
+  Same for the change node border colour.
+  If a node of the circular network layout is moved, the network is transformed to show all nodes as horizontal
+      textboxes (the new layout is spring-electrical embedding, however it is not optimized as such unless the user
+      does so themselves.
+Apply parameters from a node to other nodes:
+  A button is added which asks the user to select a node whose parameters can be applied on all or selected nodes,
+     or set as defaults
+
+5.1
+
+Updated functions GetRPData and GetRPData_Outer to reflect changes in KEGG.
+
+5.2
+
+Updated function MetaboNetworksGUIv2 to reflect changes in KEGG.
+
+#####################################################################################################################
