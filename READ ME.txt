@@ -5,8 +5,9 @@
 5. New in version 2.0
 5.1.  Changes in version 2.1
 5.2.  Changes in version 2.2
+5.3.  Changes in version 2.3
 
-Copyright J.M. Posma 2013-2018
+Copyright J.M. Posma 2013-2019
 
 #####################################################################################################################
 
@@ -25,12 +26,11 @@ Author: J. M. Posma
 Institution: Imperial College London
 Department: Computational and Systems Medicine, Department of Surgery and Cancer
 Email: jmp111@ic.ac.uk
-Version: 2.0
+Version: 2.3
 Citation: Posma JM, et al. (2014) Bioinformatics 30(6):893-5
 
 Platform dependence: none found (tested on Windows 7, Mac OSX 7.14 (Snow Leopard))
-Software dependence: none found (tested on Matlab versions 2010b, 2012a, 2012b, 2013a, 2013b, 2014a)
-                     one found (2014b - software does not work in this version, Mathworks changed GUI style)
+Software dependence: none found (tested on Matlab versions 2014a, 2018b)
 Toolbox dependence: none, when Statistics Toolbox is available, Multi-Dimensional Scaling can also be used as layout.
 
 #####################################################################################################################
@@ -144,5 +144,13 @@ Updated functions GetRPData and GetRPData_Outer to reflect changes in KEGG.
 5.2
 
 Updated function MetaboNetworksGUIv2 to reflect changes in KEGG.
+
+5.3
+
+Updated function MetaboNetworksGUIv2 to allow optimization of only the positions selected node(s) using spring-
+  electrical embedding.
+Use: first enable lock nodes button, then select metabolite(s) you wish to optimize the position of while keeping
+  other nodes in the same positions. Last, select 'spring' button. Note: it may not result in the layout that you
+  intend to end up with, as the remaining nodes still have attractive/repulsive effects which affects the result.
 
 #####################################################################################################################
