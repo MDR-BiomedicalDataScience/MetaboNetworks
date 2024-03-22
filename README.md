@@ -5,5 +5,6 @@ A multi-systemic example data set is provided of a supra-organism, this includes
 [![DOI:10.1093/bioinformatics/btt612](http://img.shields.io/badge/DOI-10.1093/bioinformatics/btt612-0887BA.svg)](https://doi.org/10.1093/bioinformatics/btt612)
 
 Run instructions:
-> MetaboGetworks
-> MetaboNetworks
+> >> MetaboGetworks
+
+> >> MetaboNetworks
